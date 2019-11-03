@@ -1,0 +1,342 @@
+---
+title: "Visualising physics"
+subtitle: "High-dimensional data visualisation for physics applications"
+author: 
+  - "Ursula Laa"
+output:
+  xaringan::moon_reader:
+    css: ["kunoichi", "ninjutsu"]
+    lib_dir: libs
+    seal: false
+    nature:
+      highlightStyle: github
+      ratio: '16:9'
+      highlightLines: true
+      countIncrementalSlides: false
+      beforeInit: ["./libs/jquery/jquery.min.js", "./libs/slides.js"]
+---
+layout: false
+class: split-33 with-thick-border border-black
+
+
+```{css, echo=FALSE}
+/* custom.css */
+:root{
+  --main-color1: #2f4c7a;
+  --main-color2: #bcbddc;
+  --main-color3: #efedf5;
+  --main-color4: #9DDAE5;
+  --text-color3: black;
+  --text-color4: black;
+  --code-inline-color: #4e5054;
+  --link-color: #006CAB;
+}
+.large { font-size: 150% }
+.largeish { font-size: 120% }
+.summarystyle { font-size: 150%;
+  line-height:150%;}
+```
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, width = 120)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(htmltools)
+library(icon)
+opts_chunk$set(
+  echo = FALSE, warning = FALSE, message = FALSE, comment = "#>",
+  fig.path = 'figure/', cache.path = 'cache/', fig.align = 'center',
+  fig.width = 12, fig.height = 4, fig.show = 'hold',
+  cache = TRUE, external = TRUE, dev = 'png', dev.args = list(bg = "transparent")
+)
+mp4_vid2 <- function(src, width){
+  HTML(
+    paste0(
+      '<video width="', width, '" loop autoplay>
+        <source src="', src, '" type="video/mp4">
+      </video>'
+    )
+  )
+}
+```
+
+.column[.bottom_abs.content[
+<img src="images/monash-university-logo-transparent.png" width="70%">
+]]
+
+.column.bg-main1[.content.vmiddle[.center[
+
+
+
+
+# High-dimensional data visualisation
+## with the grand tour
+<br>
+<br>
+
+# Ursula Laa
+
+
+### School of Physics and Astronomy
+### &
+### Department of Econometrics and Business Statistics
+
+]]]
+---
+class: split-two
+
+.column[.content[
+# Why visualise data?
+
+<br>
+
+.large[Example: Anscombe's quartet]
+.centre[
+<img src="images/Anscombe.png" width="75%">
+<br>
+from Wikipedia
+]
+.large[All four datasets have nearly identical simple descriptive statistics (mean, variance, correlation, linear regression line)!]
+
+]]
+
+--
+
+.column[.content.vmiddle[
+
+## Visualisation in physics
+
+.largeish[
+* analyse, understand and interpret results
+* guide intuition on phenomena beyond direct experience
+* diagnose problems
+* communicate results
+]
+
+
+.largeish[Effective thanks to our ability to recognize patterns and identify subtle features in images]
+
+<br>
+
+.large[The greatest value of a picture is when it forces us to notice what we never expected to see. (John Tukey)]
+ 
+ <br>
+
+.large[But how can we look at data in more than 3 dimensions?]
+]]
+
+---
+
+# What do you see?
+
+<br><br>
+
+.center[
+```{r}
+mp4_vid2("images/media.io_cube-3.mp4", 550)
+```
+]
+
+Example videos taken from [here](http://schloerke.com/geozoo/)
+
+---
+
+# What do you see?
+
+<br>
+<br>
+
+.center[
+```{r}
+mp4_vid2("images/media.io_cube-4.mp4", 450)
+```
+]
+
+--
+<br>
+
+.large[Same principle of smoothly interpolating between 2D projections lets us see a 4D cube!]
+--
+<br>
+.large[This is called a tour and works for any number of dimensions.]
+
+---
+# Exploring structure in high dimensions
+
+.large[__Idea__: use tour visualisations for identification and exploration of grouping, to find outlying points and other structure in high dimensional distributions]
+
+<br>
+--
+
+## Example: PDFSense data
+
+.largeish[
+__PDFSense__ [arXiv:1803.02777] aims to study the sensitivity of hadronic experiments to nucleon structure, encoded in "fit residuals" (defining a 56 dimensional parameter space)
+]
+
+.largeish[__Objective__: by studying the fit residuals we learn about
+* grouping: show how different types of measurements constrain different directions in parameter space
+* relevance to the fit: the residuals encode the sensitivity of the fit to single measurements, so finding observables that are different from the main distribution (i.e. all the other measurements) means finding those which are expected to be important in future fits
+
+
+Visualisation is a great way of addressing these questions!
+
+]
+
+---
+layout: false
+class: split-33 with-border border-black
+
+.column[.content.vmiddle[
+## A grand tour display of the distribution
+
+
+
+.largeish[Group data according to the type of measurments:
+* DIS (blue)
+* VBP (orange)
+* jets (red)]
+
+
+
+.largeish[Use PCA to reduce from 56 to 6 dimensions, and compare the groups in the 6D space using a grand tour]
+
+
+
+.largeish[Observations:
+* jet data in a 2D plane
+* orthogonality between groups
+* non-linear dependences
+]
+
+]]
+
+
+
+.column[.content.vmiddle[
+```{r, out.width='70%', out.height='70%'}
+knitr::include_graphics("gifs/allcenter.gif")
+```
+]]
+---
+layout: false
+class: split-33 with-border border-black
+
+.column[.content.vmiddle[
+## Going into details - The jets cluster
+
+<br>
+
+.largeish[Focusing on one group, we can for example compare in detail the distributions obtained for different experiments, visually identify outlying points]
+
+<br>
+
+.largeish[Special marker symbols highlight selected kinematic regions that stand out in the distribution of residuals]
+
+<br>
+
+.largeish[An outlying point in the ATLAS7new dataset is marked with a star symbol]
+
+]]
+
+.column[.content.vmiddle[.center[
+```{r, out.width='70%', out.height='70%'}
+knitr::include_graphics("gifs/jetCluster.gif")
+```
+]]]
+
+---
+
+class: split-60
+
+.column[.content[
+# Projection pursuit
+
+<br>
+
+.large[__Idea__: find interesting low-dimensional projections of high-dimensional data by optimizing an index over all possible projections]
+
+<br>
+
+.large[We can combine the idea of projection pursuit with the grand tour, this is called a guided tour and will move towards more interesting views of the data by increasing the index for each step]
+
+<br>
+
+.large[But how can we define interesting? Typical index functions aim to detect departure from known distributions (in particular normal distributions), or clustering. What about complex bivariate patterns?]
+
+.largeish[see [arXiv:1902.00181]]
+]]
+--
+
+.column[.content.vmiddle[
+.largeish[We can consider index functions developed for variable selection in large datasets, for example based on mutual information, measuring how much one variable tells us about another]
+ 
+ <br>
+ 
+.large[MIC index]
+
+<br>
+.center[<img src="images/mic.pdf" width="65%">]
+<br>
+from [Reshef et al. (2012)]
+
+]]
+
+---
+# Guided tour example
+
+.large[Considering 11-d posterior sample fitting a simulated gravitational wave signal, using the guided tour and optimising the TIC index to move towards more structured views of the distribution]
+
+.center[
+<iframe src="images/BBH.html" width="800" height="500" scrolling="yes" seamless="seamless" frameBorder="0"> </iframe>
+]
+
+---
+
+# The galahr package
+
+
+.center[
+```{r}
+mp4_vid2("gifs/demo.mp4", 1000)
+```
+]
+
+https://uschilaa.github.io/galahr/
+
+---
+class: bg-main1
+# Summary
+
+<br>
+
+.large[&#9655; Visualisation plays an important role in physics research, but is difficult for high-dimensional data]
+
+
+--
+
+
+.large[&#9655; Typically we rely on some form of dimension reduction before visualising multivariate data]
+
+
+--
+
+
+.large[&#9655; The tour allows us to visualise distributions in more than two dimensions, providing new insights and better understanding]
+
+--
+
+
+.large[&#9655; Projection pursuit may be used to extract relations between linear combinations of parameters]
+
+--
+
+
+.large[&#9655; You can easily do this using the galahr R package!]
+
+--
+
+
+.large[&#9655; Sometimes projections are not sufficient to show the full information, e.g. hollow vs full sphere, we should think about systematic approaches to slicing as well, see [arXiv:1910.10854]]

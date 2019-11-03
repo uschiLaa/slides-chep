@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Visualising physics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ursula Laa" />
+    <link href="libs/remark-css/kunoichi.css" rel="stylesheet" />
+    <link href="libs/remark-css/ninjutsu.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+layout: false
+class: split-33 with-thick-border border-black
+
+
+&lt;style type="text/css"&gt;
+/* custom.css */
+:root{
+  --main-color1: #2f4c7a;
+  --main-color2: #bcbddc;
+  --main-color3: #efedf5;
+  --main-color4: #9DDAE5;
+  --text-color3: black;
+  --text-color4: black;
+  --code-inline-color: #4e5054;
+  --link-color: #006CAB;
+}
+.large { font-size: 150% }
+.largeish { font-size: 120% }
+.summarystyle { font-size: 150%;
+  line-height:150%;}
+&lt;/style&gt;
+
+
+
+
+.column[.bottom_abs.content[
+&lt;img src="images/monash-university-logo-transparent.png" width="70%"&gt;
+]]
+
+.column.bg-main1[.content.vmiddle[.center[
+
+
+
+
+# High-dimensional data visualisation
+## with the grand tour
+&lt;br&gt;
+&lt;br&gt;
+
+# Ursula Laa
+
+
+### School of Physics and Astronomy
+### &amp;
+### Department of Econometrics and Business Statistics
+
+]]]
+---
+class: split-two
+
+.column[.content[
+# Why visualise data?
+
+&lt;br&gt;
+
+.large[Example: Anscombe's quartet]
+.centre[
+&lt;img src="images/Anscombe.png" width="75%"&gt;
+&lt;br&gt;
+from Wikipedia
+]
+.large[All four datasets have nearly identical simple descriptive statistics (mean, variance, correlation, linear regression line)!]
+
+]]
+
+--
+
+.column[.content.vmiddle[
+
+## Visualisation in physics
+
+.largeish[
+* analyse, understand and interpret results
+* guide intuition on phenomena beyond direct experience
+* diagnose problems
+* communicate results
+]
+
+
+.largeish[Effective thanks to our ability to recognize patterns and identify subtle features in images]
+
+&lt;br&gt;
+
+.large[The greatest value of a picture is when it forces us to notice what we never expected to see. (John Tukey)]
+ 
+ &lt;br&gt;
+
+.large[But how can we look at data in more than 3 dimensions?]
+]]
+
+---
+
+# What do you see?
+
+&lt;br&gt;&lt;br&gt;
+
+.center[
+<video width="550" loop autoplay>
+        <source src="images/media.io_cube-3.mp4" type="video/mp4">
+      </video>
+]
+
+Example videos taken from [here](http://schloerke.com/geozoo/)
+
+---
+
+# What do you see?
+
+&lt;br&gt;
+&lt;br&gt;
+
+.center[
+<video width="450" loop autoplay>
+        <source src="images/media.io_cube-4.mp4" type="video/mp4">
+      </video>
+]
+
+--
+&lt;br&gt;
+
+.large[Same principle of smoothly interpolating between 2D projections lets us see a 4D cube!]
+--
+&lt;br&gt;
+.large[This is called a tour and works for any number of dimensions.]
+
+---
+# Exploring structure in high dimensions
+
+.large[__Idea__: use tour visualisations for identification and exploration of grouping, to find outlying points and other structure in high dimensional distributions]
+
+&lt;br&gt;
+--
+
+## Example: PDFSense data
+
+.largeish[
+__PDFSense__ [arXiv:1803.02777] aims to study the sensitivity of hadronic experiments to nucleon structure, encoded in "fit residuals" (defining a 56 dimensional parameter space)
+]
+
+.largeish[__Objective__: by studying the fit residuals we learn about
+* grouping: show how different types of measurements constrain different directions in parameter space
+* relevance to the fit: the residuals encode the sensitivity of the fit to single measurements, so finding observables that are different from the main distribution (i.e. all the other measurements) means finding those which are expected to be important in future fits
+
+
+Visualisation is a great way of addressing these questions!
+
+]
+
+---
+layout: false
+class: split-33 with-border border-black
+
+.column[.content.vmiddle[
+## A grand tour display of the distribution
+
+
+
+.largeish[Group data according to the type of measurments:
+* DIS (blue)
+* VBP (orange)
+* jets (red)]
+
+
+
+.largeish[Use PCA to reduce from 56 to 6 dimensions, and compare the groups in the 6D space using a grand tour]
+
+
+
+.largeish[Observations:
+* jet data in a 2D plane
+* orthogonality between groups
+* non-linear dependences
+]
+
+]]
+
+
+
+.column[.content.vmiddle[
+&lt;img src="gifs/allcenter.gif" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+]]
+---
+layout: false
+class: split-33 with-border border-black
+
+.column[.content.vmiddle[
+## Going into details - The jets cluster
+
+&lt;br&gt;
+
+.largeish[Focusing on one group, we can for example compare in detail the distributions obtained for different experiments, visually identify outlying points]
+
+&lt;br&gt;
+
+.largeish[Special marker symbols highlight selected kinematic regions that stand out in the distribution of residuals]
+
+&lt;br&gt;
+
+.largeish[An outlying point in the ATLAS7new dataset is marked with a star symbol]
+
+]]
+
+.column[.content.vmiddle[.center[
+&lt;img src="gifs/jetCluster.gif" width="70%" height="70%" style="display: block; margin: auto;" /&gt;
+]]]
+
+---
+
+class: split-60
+
+.column[.content[
+# Projection pursuit
+
+&lt;br&gt;
+
+.large[__Idea__: find interesting low-dimensional projections of high-dimensional data by optimizing an index over all possible projections]
+
+&lt;br&gt;
+
+.large[We can combine the idea of projection pursuit with the grand tour, this is called a guided tour and will move towards more interesting views of the data by increasing the index for each step]
+
+&lt;br&gt;
+
+.large[But how can we define interesting? Typical index functions aim to detect departure from known distributions (in particular normal distributions), or clustering. What about complex bivariate patterns?]
+
+.largeish[see [arXiv:1902.00181]]
+]]
+--
+
+.column[.content.vmiddle[
+.largeish[We can consider index functions developed for variable selection in large datasets, for example based on mutual information, measuring how much one variable tells us about another]
+ 
+ &lt;br&gt;
+ 
+.large[MIC index]
+
+&lt;br&gt;
+.center[&lt;img src="images/mic.pdf" width="65%"&gt;]
+&lt;br&gt;
+from [Reshef et al. (2012)]
+
+]]
+
+---
+# Guided tour example
+
+.large[Considering 11-d posterior sample fitting a simulated gravitational wave signal, using the guided tour and optimising the TIC index to move towards more structured views of the distribution]
+
+.center[
+&lt;iframe src="images/BBH.html" width="800" height="500" scrolling="yes" seamless="seamless" frameBorder="0"&gt; &lt;/iframe&gt;
+]
+
+---
+
+# The galahr package
+
+
+.center[
+<video width="1000" loop autoplay>
+        <source src="gifs/demo.mp4" type="video/mp4">
+      </video>
+]
+
+https://uschilaa.github.io/galahr/
+
+---
+class: bg-main1
+# Summary
+
+&lt;br&gt;
+
+.large[&amp;#9655; Visualisation plays an important role in physics research, but is difficult for high-dimensional data]
+
+
+--
+
+
+.large[&amp;#9655; Typically we rely on some form of dimension reduction before visualising multivariate data]
+
+
+--
+
+
+.large[&amp;#9655; The tour allows us to visualise distributions in more than two dimensions, providing new insights and better understanding]
+
+--
+
+
+.large[&amp;#9655; Projection pursuit may be used to extract relations between linear combinations of parameters]
+
+--
+
+
+.large[&amp;#9655; You can easily do this using the galahr R package!]
+
+--
+
+
+.large[&amp;#9655; Sometimes projections are not sufficient to show the full information, e.g. hollow vs full sphere, we should think about systematic approaches to slicing as well, see [arXiv:1910.10854]]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="./libs/jquery/jquery.min.js"></script>
+<script src="./libs/slides.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"ratio": "16:9",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
